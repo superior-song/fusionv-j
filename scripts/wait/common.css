@@ -1,0 +1,5 @@
+
+/* ui_loading */
+.ui_loading { background:#fff; background:rgba(255,255,255,0.8); box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:3px; position:fixed; top:0px; left:0px; z-index:999999; padding:10px 20px;}
+.ui_loading .cont { background:url(loading.gif) center left no-repeat; padding-left:40px; height:32px; line-height:32px;}
+.ui_loading_model { background:#3079ed;  filter:alpha(Opacity=10); opacity: .1; position:absolute; top:0px; left:0px; z-index:9999; width:100%; }

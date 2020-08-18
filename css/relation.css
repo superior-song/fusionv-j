@@ -1,0 +1,38 @@
+.node:hover {
+    cursor: pointer;
+}
+
+/* .node:hover .circle {
+    animation: rotating 2s linear infinite;
+    -webkit-animation: rotating 5s linear infinite;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+} */
+
+.stop-left {
+    stop-color: #5F7EBB;
+}
+
+.stop-middle {
+    stop-color: #5F7EBB;
+}
+
+.stop-right {
+    stop-color: #5F7EBB;
+}
+
+.line {
+    stroke-width: 1;
+    stroke: url(#lineGradient);
+}
+svg{
+    padding-top:66px;
+}

@@ -1,0 +1,732 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="referrer" content="never">
+    <title>demo+vue+jsp</title>
+    <link href="css/element.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="js/Swiper/dist/idangerous.swiper.css" rel="stylesheet" />
+    <script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="js/vue2.5.17.min.js" type="text/javascript"></script>
+
+    <script src="js/element.js" type="text/javascript"></script>
+    <script src="js/zh-CN.js" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/moment.js"></script>
+    <script type="text/javascript" src="scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="scripts/validator.js"></script>
+    <script type="text/javascript" src="scripts/common.js"></script>
+
+    <script type="text/javascript" src="scripts/calendar.js"></script>
+    <script type="text/javascript" src="scripts/divBoxDrag.js"></script>
+    <script type="text/javascript" src="scripts/loading.js"></script>
+    <script type="text/javascript" src="scripts/moment.js"></script>
+
+    <script type="text/javascript" src="scripts/commontree.js"> </script>
+    <script type="text/javascript" src="scripts/popping/popping.js"></script>
+    <style type="text/css">
+        .mod-form-set.el-form .w130 .el-input__inner {
+            width: 100px;
+        }
+
+        .panel-progress-box {
+            position: absolute;
+            top: 360px;
+            left: 50%;
+            margin: 0 0 0 -300px;
+            width: 600px;
+            height: 200px;
+            z-index: 2;
+        }
+
+        .btn-add-bk {
+            display: inline-block;
+            font-size: 13px;
+            color: #0897c5;
+            cursor: pointer;
+        }
+
+        .title-opt i {
+            display: inline-block;
+            vertical-align: -1px;
+            margin-right: 5px;
+            width: 14px;
+            height: 14px;
+        }
+
+        .btn-del-mutil {
+            display: inline-block;
+            font-size: 13px;
+            color: #0897c5;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .el-form-item__label {
+            width: 88px !important;
+        }
+
+        /*导入弹出层样式*/
+        .box-setting {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 490px;
+            border: 5px solid #0998b7;
+            border-radius: 6px;
+            z-index: 1990;
+        }
+
+        .box-setting-head {
+            margin: -1px 0 0 -1px;
+            background-color: #0998b7;
+            height: 28px;
+            line-height: 28px;
+        }
+
+        .box-name {
+            margin-left: 8px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .box-close {
+            float: right;
+            margin-top: 9px;
+            margin-right: 6px;
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            background-image: url(images/icon_box_close.png);
+            cursor: pointer;
+        }
+
+        .box-setting-content {
+            padding: 10px;
+            background-color: #03485c;
+            padding-bottom: 12px;
+        }
+
+        .box-manage-search.box-setting {
+            border-top: none;
+            width: 520px;
+        }
+
+        .file-upload {
+            padding: 60px 0;
+            background-color: #045972;
+            text-align: center;
+            color: #fff;
+        }
+
+        .file-upload .el-icon-plus {
+            display: block;
+            font-size: 48px;
+
+        }
+
+        .btn-form-plbk {
+            margin: 22px 0 10px;
+        }
+
+        .btn-form-xzmb {
+            margin: 16px 0 22px;
+        }
+
+        .btn-form-plbk .el-button {
+            width: 220px;
+            background-color: #1ca8f0;
+            border-color: #1ca8f0;
+            color: #fff;
+            border-radius: 0;
+        }
+
+        .bk-mhcp {
+            padding: 8px;
+        }
+
+        .el-tabs__header {
+            display: none;
+        }
+
+        .layout-set3 {
+            padding: 0px 0px;
+        }
+
+        .res-list1 .res-list-item {
+            width: 24%;
+            height: 280px;
+        }
+
+        .res-list-zp .res-list-item .img-box-option {
+            margin: 0 auto 4px;
+            width: 296px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body class="body-index">
+    <div id="appQuery" v-cloak>
+        <!-- loading -->
+        <div id="loadWrap" class="loader">
+            <div class="la-ball-spin-fade-rotating">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <!-- 模块-tab -->
+        <el-tabs v-model="activeName2" type="card">
+            <el-tab-pane label="${mod_name}" name="first">
+                <html-el:form action="/FaceCaptureSearch" enctype="multipart/form-data">
+                    <html-el:hidden property="mod_id" styleId="mod_id" />
+                    <html-el:hidden property="faceVideoCamera" styleId="faceVideoCamera" />
+                    <input id="cameraId" type="hidden" name="cameraId" value="">
+                    <input id="currentAlarmId" type="hidden" name="currentAlarmId" value="${currentAlarmId}" />
+
+                    <input id="imgUrl" type="hidden" name="imgUrl" value="${imgUrl}">
+
+                    <div class="panel-query panel-query-style1 pic-upload-pd layout-flex-4">
+                        <div :class="[{'set-pd': isMore1}, 'panel-query-bottom layout-set3']">
+                            <el-form :inline="true" :model="formInline"
+                                class="demo-form-inline mod-form-qf mod-form-set" style="margin-top: 26px;">
+                                <el-form-item label="告警时间:">
+                                    <el-col :span="11">
+                                        <el-date-picker type="datetime" placeholder="" v-model="sizeForm.alarmStartTime"
+                                            style="width: 100%;">
+                                        </el-date-picker>
+                                    </el-col>
+                                    <el-col class="line" :span="2">-</el-col>
+                                    <el-col :span="11">
+                                        <el-date-picker v-model="sizeForm.alarmEndTime" type="datetime" placeholder=""
+                                            style="width: 100%;">
+                                        </el-date-picker>
+                                    </el-col>
+
+                                </el-form-item>
+                                <el-form-item label="预警类型:">
+                                    <el-select v-model="sizeForm.alarmType" placeholder="">
+                                        <el-option label="请选择" value=""></el-option>
+                                        <el-option label="人群聚集" value="1"></el-option>
+                                        <el-option label="拉横幅" value="2"></el-option>
+                                        <el-option label="越线入侵" value="3"></el-option>
+                                        <el-option label="打架斗殴" value="4"></el-option>
+                                        <el-option label="翻越围栏" value="5"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="风险等级:">
+                                    <el-select v-model="sizeForm.alarmRisk" placeholder="">
+                                        <el-option label="请选择" value=""></el-option>
+                                        <el-option label="正常" value="normal"></el-option>
+                                        <el-option label="低等" value="low"></el-option>
+                                        <el-option label="中等" value="medium"></el-option>
+                                        <el-option label="高等" value="high"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item>
+                                    <div class="btn-form-group">
+                                        <el-button type="primary" @click="onSubmit">查询
+                                        </el-button>
+                                        <el-button type="success" @click="onClear">重置</el-button>
+                                    </div>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </div>
+                </html-el:form>
+                <div class="query-res-1 page-space panel-style-1">
+                    <div class="query-res-head layout-flex-3">
+                        <span class="title-name">查询结果</span>
+                        <div class="title-opt layout-flex-3">
+                        </div>
+                    </div>
+                    <div class="query-res-cont">
+
+                        <div id="resultError" class="res-img-error disnone" style="display: none">
+                            <i></i>没有搜到结果
+                        </div>
+
+                        <ul class="res-list res-list1 res-list-zp">
+                            <li v-for="(item, index) in captureLists" :key="index" class="res-list-item">
+                                <div class="res-list-inner">
+                                    <div class="img-box-option">
+                                        <img :src="item.alarmSmallimgUrl" alt="" />
+                                        <div class="icon-box-option layout-flex-3">
+                                        </div>
+                                        <div class="level-zz"></div>
+                                    </div>
+                                    <div class="item-checkbox" @click="checkId(item.id)">
+                                        <span class="check-item" :id="item.id"></span>
+                                    </div>
+                                    <p class="txt-control-single">发生地点：{{item.cameraName}}</p>
+                                    <p class="txt-control-single">预警类型：{{item.alarmType}}</p>
+                                    <p class="txt-control-single">预警时间：{{item.alarmTime}}</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="pages-wrap">
+                            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                                :current-page="current_page" :page-sizes="[8]" :page-size="page_size"
+                                layout="total,sizes, prev, pager, next" :total="total">
+                            </el-pagination>
+                        </div>
+                    </div>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+</body>
+
+<script>
+    ELEMENT.locale(ELEMENT.lang.zhCN);
+    var timer = ""; //定时任务
+    var timer2 = ""; //定时任务2
+
+    var appQuery = new Vue({
+        el: '#appQuery',
+        data: {
+            addEdit: true,
+            form: {
+                id: '',
+                alarmId: '',
+                alarmType: '',
+                alarmTime: '',
+                alarmContent: '',
+                alarmSmallimgUrl: '',
+                alarmStatus: '',
+                alarmTaskid: '',
+                alarmRmark: '',
+                alarmRisk: '',
+                alarmSourceimgUrl: '',
+                alarmBigimgUrl: '',
+                alarmCamerano: '',
+                expandfield1: '',
+                expandfield2: '',
+                expandfield3: ''
+            },
+            checkIE: '${checkIE}',
+            applyId: '${applyId}',
+            fileList: [],
+
+            imgFile: '',
+
+            input: '', //搜索框值
+            activeName2: 'first',
+            submitDisabled: false,
+            orderSimilarityDisabled: true,
+            scoreDisabled: true,
+            formInline: {
+                user: '',
+                region: ''
+            },
+            sizeForm: {
+                id: '',
+                alarmId: '',
+                alarmType: '',
+                alarmStartTime: '',
+                alarmEndTime: '',
+                alarmContent: '',
+                alarmSmallimgUrl: '',
+                alarmStatus: '',
+                alarmTaskid: '',
+                alarmRmark: '',
+                alarmRisk: '',
+                alarmSourceimgUrl: '',
+                alarmBigimgUrl: '',
+                alarmCamerano: '',
+                expandfield1: '',
+                expandfield2: '',
+                expandfield3: ''
+            },
+            captureListsCopy: [],
+            captureLists: [],
+            score: 80,
+            isMore1: false,
+            page_size: 8,
+            current_page: 1,
+            total: 0,
+            flag: 0, //flag=1今日抓拍数据，flag=0历史抓拍数据
+            checkStr: '',
+            progressSum: 100, //进度条
+            progressKey: '',
+            itemObject: {
+                id: '1',
+                alarmSmallimgUrl: 'image/photo.png',
+                cameraName: '安徽省合肥市高新区',
+                alarmType: '涉黑',
+                alarmTime: '2020-08-18 10:00:00'
+            }
+        },
+        mounted: function () {
+            var _this = this;
+            var queryHeight = document.getElementsByClassName('panel-query')[0].clientHeight;
+            _this.setBottomHeight(queryHeight);
+
+            window.onresize = function () {
+                console.log(queryHeight);
+                _this.$nextTick(function () {
+                    var queryHeight = document.getElementsByClassName('panel-query')[0]
+                        .clientHeight;
+                    _this.setBottomHeight(queryHeight);
+                })
+            }
+            this.onSubmit();
+        },
+        methods: {
+            //提示框
+            succeed: function (msg) {
+                var _this = this;
+                _this.$notify({
+                    title: '成功',
+                    message: msg,
+                    type: 'success'
+                });
+            },
+            tipShow: function () {
+                var checkStr = this.checkStr.split(",");
+                if (checkStr.length == 0 || (checkStr.length == 1 && checkStr[0] == '')) {
+                    this.hint("请选择需要删除的数据！");
+                    this.closetipShow();
+                    return;
+                }
+                var _msg = document.getElementsByClassName('msgBody')[0];
+                _msg.classList.remove('disnone');
+            },
+            closetipShow: function () {
+                this.checkStr = "";
+                var _msg = document.getElementsByClassName('msgBody')[0];
+                _msg.classList.add('disnone');
+            },
+            // 分页方法
+            handleSizeChange: function (val) {
+                openload('loadWrap');
+                this.captureLists = [];
+                this.page_size = val;
+                this.getBehaviorList();
+            },
+            handleCurrentChange: function (val) {
+                openload('loadWrap');
+                this.captureLists = [];
+                this.current_page = val;
+                this.getBehaviorList();
+            },
+
+            // 表单提交
+            onSubmit: function () {
+                this.current_page = 1;
+                this.getBehaviorList();
+            },
+
+            //清除
+            onClear: function () {
+                appQuery.sizeForm.alarmStartTime = '';
+                appQuery.sizeForm.alarmEndTime = '';
+                appQuery.sizeForm.alarmType = '';
+                appQuery.sizeForm.alarmRisk = '';
+            },
+
+            // 底部模块高度设置
+            setBottomHeight: function (termh) {
+                var _bodyHeight = 0;
+                var _iframe = parent.document.getElementById('right_body');
+                //console.log(_iframe);
+                if (_iframe != null)
+                    _bodyHeight = parent.document.body.clientHeight - 100;
+                else
+                    _bodyHeight = parent.document.body.clientHeight;
+
+                var bottomMod = document.getElementsByClassName('query-res-1')[0];
+                var innerList = bottomMod.getElementsByClassName('query-res-cont')[0];
+
+                bottomMod.style.height = (_bodyHeight - termh - 100) + 'px';
+                innerList.style.height = (_bodyHeight - termh - 200) + 'px';
+            },
+
+            //结果排序
+            changeOrder: function (orderType) {
+                appQuery.captureListsCopy = appQuery.captureLists;
+                appQuery.captureLists = [];
+                if (appQuery.fileList.length > 0) {
+                    //相似度排序
+                    if ("similarity" == orderType) {
+                        $("#orderTime").removeClass("active");
+                        $("#orderSimilarity").addClass("active");
+                        appQuery.captureListsCopy.sort(compare("confidence"));
+                        //appQuery.captureLists.sort(compare("confidence"));
+
+                    } else { //时间排序
+                        $("#orderSimilarity").removeClass("active");
+                        $("#orderTime").addClass("active");
+                        appQuery.captureListsCopy.sort(compare("recordTime"));
+                        //appQuery.captureLists.sort(compare("recordTime"));
+                    }
+
+                }
+                appQuery.captureLists = appQuery.captureListsCopy;
+            },
+
+            //选择框
+            checkId: function (id) {
+                var strArray = this.checkStr.split(",");
+                var imgIdClass = $("#" + id).attr("class");
+                if (imgIdClass == "check-item") {
+                    if (this.checkStr.indexOf(id) < 0) {
+                        $("#" + id).addClass("checked");
+                        this.checkStr = this.checkStr + id + ",";
+                    }
+                } else {
+                    $("#" + id).removeClass("checked");
+                    for (var k = 0; k < strArray.length; k++) {
+                        if (strArray[k] == id) {
+                            strArray.splice(k, 1);
+                        }
+                    }
+                    this.checkStr = strArray.toString();
+                }
+            },
+
+            // 初始化弹窗位置
+            initBoxPos: function (box) {
+                var winW = window.innerWidth;
+                var winH = window.innerHeight;
+                var boxW = box.offsetWidth;
+                var boxH = box.offsetHeight;
+                box.style.left = (winW - boxW) / 2 + 'px';
+                box.style.top = (winH - boxH) / 2 + 'px';
+            },
+            // 弹出窗任意拖动
+            dragBox: function (box) {
+                box.onmousedown = function (e) {
+                    var e = e || window.event;
+
+                    // 获取鼠标点击位置相对于弹窗left和top的位移
+                    var diffX = e.clientX - box.offsetLeft;
+                    var diffY = e.clientY - box.offsetTop;
+
+                    // 鼠标移动事件
+                    document.onmousemove = function (e) {
+                        var e = e || window.event;
+
+                        //根据鼠标点击位置相对于弹窗的位移来计算弹窗当前的left,top值
+                        var left = e.clientX - diffX;
+                        var top = e.clientY - diffY;
+
+                        if (left < 0) {
+                            left = 0;
+                        } else if (left > window.innerWidth - box.offsetWidth) {
+                            left = window.innerWidth - box.offsetWidth;
+                        }
+
+                        if (top < 0) {
+                            top = 0;
+                        } else if (top > window.innerHeight - box.offsetHeight) {
+                            top = window.innerHeight - box.offsetHeight;
+                        }
+
+                        box.style.left = left + 'px';
+                        box.style.top = top + 'px';
+
+                    }
+
+                    document.onmouseup = function () {
+                        this.onmousemove = null;
+                        this.onmouseup = null;
+                    }
+                }
+
+            },
+            closeAdd: function () {
+                var _bkbox = document.getElementById('boxBattle');
+                _bkbox.classList.add('disnone');
+            },
+            hint: function (msg) {
+                var _this = this;
+                _this.$notify({
+                    title: '提示',
+                    message: msg,
+                    type: 'warning'
+                });
+            },
+            /**====新增界面引入新的方法结束====**/
+            getBehaviorList: function () {
+                closeResultError();
+                this.captureLists = [];
+                this.submitDisabled = true;
+                openload('loadWrap');
+
+                var mod_id = '${mod_id}';
+                var formData = new FormData();
+                var imgFile = "";
+                if (this.imgFile != "" && this.imgFile != null) {
+                    imgFile = this.imgFile.raw;
+                }
+                formData.append('imgFile', imgFile);
+                formData.append('current_page', this.current_page);
+                formData.append('size', this.page_size);
+                console.log(this.sizeForm.alarmStartTime);
+                if (this.sizeForm.alarmStartTime != '') {
+                    formData.append('alarmStartTime', this.sizeForm.alarmStartTime.getTime());
+                }
+                if (this.sizeForm.alarmEndTime != '') {
+                    formData.append('alarmEndTime', this.sizeForm.alarmEndTime.getTime());
+                }
+                formData.append('alarmType', this.sizeForm.alarmType);
+                formData.append('alarmRisk', this.sizeForm.alarmRisk);
+                formData.append('mod_id', mod_id);
+
+
+                //TODO ajax方法调用 可在此处进行修改添加方法
+                closeload('loadWrap');
+                for (var i = 0; i < 10; i++) {
+                    this.captureLists[i] = this.itemObject;
+                }
+                //captureLists.add()
+            }
+        }
+    });
+
+
+
+    //鼠标变手型
+    function MouseChangeHand(event) {
+        event.style.cursor = 'pointer';
+    }
+
+    //获取进度
+    function getProgress() {
+        var progressKey = appQuery.progressKey;
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "FaceCaptureSearch.do",
+            data: {
+                method: 'getProgress',
+                progressKey: progressKey
+            },
+            dataType: "json",
+            error: function () {
+
+            },
+            success: function (result) {
+                appQuery.progressSum = result.progressSum;
+                appQuery.progressCount = result.progressCount;
+                appQuery.progressValue = Math.round((appQuery.progressCount / appQuery.progressSum) * 100);
+                console.log("progressSum:" + appQuery.progressSum + "-------------  progressCount:" +
+                    appQuery.progressCount);
+            }
+        });
+    }
+    //进度条加载提示
+    function setLoad() {
+        var t = $('.progressbar');
+        dataperc = t.attr('data-perc'),
+            barperc = Math.round(dataperc * 5.56);
+        t.find('.label').append('<div class="perc"></div>');
+
+        function perc() {
+            var length = t.find('.bar').css('width'),
+                perc = Math.round((appQuery.progressCount / appQuery.progressSum) * 100),
+                labelpos = (parseInt(length) - 2);
+            if (perc == 0) {
+                perc = 1;
+            }
+            if (perc >= 100) {
+                t.find('.bar').css({
+                    width: barperc
+                });
+                t.find('.label').css('left', labelpos);
+                t.find('.perc').text(100 + '%');
+            } else {
+                t.find('.bar').css({
+                    width: perc / 100 * barperc
+                });
+                t.find('.label').css('left', labelpos);
+                t.find('.perc').text(perc + '%');
+            }
+
+            if (perc >= 100) {
+                $('.panel-query-load').fadeOut(function () {
+                    perc = 0;
+                    t.find('.bar').css({
+                        width: 0
+                    });
+                    t.find('.label').css('left', 1);
+                    t.find('.label').find('.perc').remove();
+                    window.clearInterval(timer2);
+                });
+            }
+        }
+        perc();
+        timer2 = setInterval(perc, 0);
+
+    }
+
+    //用setTimeout实现setInterval的功能
+    function intervalByTimeout() {
+        if (appQuery.progressCount >= appQuery.progressSum) {
+            return;
+        } else {
+            getProgress();
+            window.setTimeout(function () {
+                intervalByTimeout();
+            }, 1000);
+        }
+    }
+
+    //打开进度条
+    function openProgress() {
+        var progressBox = document.getElementById('progress');
+        progressBox.classList.remove('disnone');
+        dragBox(progressBox);
+        initBoxPos(progressBox);
+    }
+    //关闭进度条
+    function closeProgress() {
+        var progressBox = document.getElementById('progress');
+        progressBox.classList.add('disnone');
+    }
+
+    //打开无结果提示框
+    function openResultError() {
+        var resultErrorBox = document.getElementById('resultError');
+        resultErrorBox.classList.remove('disnone');
+    }
+    //关闭无结果提示框
+    function closeResultError() {
+        var resultErrorBox = document.getElementById('resultError');
+        resultErrorBox.classList.add('disnone');
+    }
+
+    //列表降序排列
+    function compare(property) {
+        return function (obj1, obj2) {
+            var v1 = obj1[property];
+            var v2 = obj2[property];
+            if (v2 > v1) {
+                return 1;
+            } else if (v2 < v1) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
+</script>
+
+<script src="js/jquery.nicescroll.js"></script>
+<script src="js/Swiper/dist/idangerous.swiper.min.js"></script>
+<script src="js/query-face.js"></script>
+
+</html>
